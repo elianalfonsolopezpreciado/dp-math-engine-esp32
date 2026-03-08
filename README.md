@@ -1,15 +1,21 @@
+# Dynamic Precision Math Engine for Linear Algebra and Trigonometry Acceleration on Xtensa LX6 Microcontrollers
+
 <div align="center">
-  <img src="https://github.com/elianalfonsolopezpreciado/resources/raw/main/paper/esp32-paper1.jpeg" alt="ESP32-WROOM with Heat Sink" width="400">
+  <img src="https://github.com/elianalfonsolopezpreciado/resources/raw/main/paper/esp32-paper1.jpeg" alt="ESP32-WROOM with Heat Sink" width="300">
   <p><i>ESP32-WROOM module utilized during testing, equipped with a custom heat sink to mitigate thermal stress during prolonged benchmark execution.</i></p>
 </div>
 
 [Versión en Español](README_ES.md)
 
-# Dynamic Precision Math Engine for Linear Algebra and Trigonometry Acceleration on Xtensa LX6 Microcontrollers
-
 ## Abstract
 
 This repository documents the development and empirical evaluation of the **Dynamic Precision Math Engine**, an optimized arithmetic framework engineered for high-throughput computational tasks on Xtensa LX6-based microcontrollers (ESP32). By pivoting from standard IEEE-754 floating-point operations to a specialized Q16.16 fixed-point architecture, and integrating a 16-iteration CORDIC (Coordinate Rotation Digital Computer) kernel alongside tiled matrix multiplication algorithms, the system achieves substantial reductions in execution latency. Complementing the engine is the **ESP32 Academic Benchmark Lab**, a sophisticated Python-based diagnostic suite that facilitates automated firmware deployment, deterministic data acquisition, and rigorous statistical characterization of performance metrics.
+
+### Publication Status
+*   **Status:** Preprint (Under Review)
+*   **Target Repository:** [arxiv.org](https://arxiv.org)
+*   **License:** arXiv.org Perpetual Non-exclusive License
+*   **Categories:** Computer Science (cs.PF - Performance)
 
 ---
 
@@ -27,6 +33,23 @@ An integrated control environment developed in Python that orchestrates the expe
 
 ---
 
+## Source Code Breakdown
+
+### Proprietary Optimized Firmware (`src/firmware_fast`)
+This directory contains the custom-engineered fixed-point math engine. It is designed to maximize throughput by avoiding the overhead of the ESP32's floating-point unit (FPU) where possible.
+*   **`fast_math_engine.h`**: Implements the Q16.16 arithmetic core using 32-bit signed integers and 64-bit intermediates for overflow-safe multiplication.
+*   **`cordic.h`**: A zero-floating-point CORDIC implementation for trigonometric functions (sin/cos), utilizing quadrant normalization to handle the full [-π, π] range.
+*   **`matrix_q16.h`**: High-performance matrix multiplication kernel utilizing loop tiling (32x32 tiles) to optimize cache behavior and register usage.
+*   **`benchmark_suite.h`**: Orchestrates the experimental protocol, utilizing the Xtensa `ccount` register for nanosecond-level cycle measurements and a deterministic LCG (Linear Congruential Generator) for reproducible test data.
+
+### Standard Reference Firmware (`src/firmware_standard`)
+This directory provides the baseline implementation using standard IEEE-754 single-precision floating-point arithmetic for performance comparison.
+*   **`standard_math.h`**: Thin wrappers around the standard C `math.h` library (`sinf`, `cosf`) and native floating-point operators.
+*   **`matrix_float.h`**: A naive triple-loop matrix multiplication implementation without tiling or optimization, serving as the architectural baseline.
+*   **`benchmark_suite.h`**: Parallel to the fast version, it executes the same test vectors but targets the standard floating-point execution path to quantify the speedup ratio.
+
+---
+
 ## Development Environment
 
 *   **Integrated Development Environment (IDE):** Visual Studio Code
@@ -41,7 +64,12 @@ An integrated control environment developed in Python that orchestrates the expe
 The following demonstration illustrates the automated experimental workflow, including firmware orchestration and real-time telemetry acquisition.
 
 <div align="center">
-  <video src="https://github.com/elianalfonsolopezpreciado/resources/raw/main/paper/1.mp4" muted autoplay loop controls width="800"></video>
+  <a href="https://drive.google.com/file/d/1T0rxlihR3cxLFi2EU41E5WtueGxBTuF3/view?usp=sharing" target="_blank">
+    <img src="https://raw.githubusercontent.com/elianalfonsolopezpreciado/resources/main/paper/rendimiento_motor_matematico.png" alt="Watch the Execution Video" width="400">
+    <br>
+    <b>[Click here to watch the laboratory execution video on Google Drive]</b>
+  </a>
+  <p><i>Note: The video demonstrates the automated flashing and benchmark protocol.</i></p>
 </div>
 
 ### Firmware Initialization and Monitoring
@@ -56,10 +84,10 @@ Comparative analysis of system initialization via serial telemetry for both the 
 
 ## Performance Characterization
 
-The performance speedup analysis demonstrates the efficacy of the Q16.16 and CORDIC optimizations across various mathematical kernels.
+The performance speedup analysis demonstrates the efficacy of the Q16.16 and CORDIC optimizations compared to the standard IEEE-754 floating-point baseline.
 
 <div align="center">
-  <img src="https://github.com/elianalfonsolopezpreciado/resources/raw/main/paper/rendimiento_motor_matematico.png" alt="Performance Acceleration Comparison" width="800">
+  <img src="https://github.com/elianalfonsolopezpreciado/resources/raw/main/paper/fig3_speedup_ratio.png" alt="Performance Acceleration Comparison (English)" width="800">
 </div>
 
 ---

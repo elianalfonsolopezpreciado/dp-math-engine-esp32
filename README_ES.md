@@ -1,15 +1,21 @@
+# Dynamic Precision Math Engine para la Aceleración de Álgebra Lineal y Trigonometría en Microcontroladores Xtensa LX6
+
 <div align="center">
-  <img src="https://github.com/elianalfonsolopezpreciado/resources/raw/main/paper/esp32-paper1.jpeg" alt="ESP32-WROOM with Heat Sink" width="400">
-  <p><i>Módulo ESP32-WROOM utilizado durante las pruebas, equipado con un disipador de calor para mitigar el estrés térmico durante ejecuciones prolongadas.</i></p>
+  <img src="https://github.com/elianalfonsolopezpreciado/resources/raw/main/paper/esp32-paper1.jpeg" alt="ESP32-WROOM con Disipador" width="300">
+  <p><i>Módulo ESP32-WROOM utilizado durante las pruebas, equipado con un disipador de calor personalizado para mitigar el estrés térmico durante ejecuciones prolongadas del benchmark.</i></p>
 </div>
 
 [English Version](README.md)
 
-# Dynamic Precision Math Engine para la Aceleración de Álgebra Lineal y Trigonometría en Microcontroladores Xtensa LX6
-
 ## Resumen
 
 Este repositorio documenta el desarrollo y la evaluación empírica del **Dynamic Precision Math Engine**, un marco aritmético optimizado diseñado para tareas computacionales de alto rendimiento en microcontroladores basados en Xtensa LX6 (ESP32). Al transicionar de operaciones de punto flotante IEEE-754 a una arquitectura especializada de punto fijo Q16.16, e integrar un núcleo CORDIC de 16 iteraciones junto con algoritmos de multiplicación de matrices por teselas, el sistema logra reducciones sustanciales en la latencia de ejecución. Complementando al motor se encuentra el **ESP32 Academic Benchmark Lab**, una sofisticada suite de diagnóstico basada en Python que facilita el despliegue automatizado de firmware, la adquisición determinista de datos y una caracterización estadística rigurosa de las métricas de rendimiento.
+
+### Estado de Publicación
+*   **Estado:** Preprint (Bajo Revisión)
+*   **Repositorio Objetivo:** [arxiv.org](https://arxiv.org)
+*   **Licencia:** Licencia Perpetua No Exclusiva de arXiv.org
+*   **Categorías:** Computer Science (cs.PF - Performance)
 
 ---
 
@@ -27,6 +33,23 @@ Un entorno de control integrado desarrollado en Python que orquesta el ciclo de 
 
 ---
 
+## Desglose del Código Fuente
+
+### Firmware Optimizado Propietario (`src/firmware_fast`)
+Este directorio contiene el motor matemático de punto fijo diseñado a medida. Está concebido para maximizar el rendimiento evitando la sobrecarga de la unidad de punto flotante (FPU) del ESP32 cuando es posible.
+*   **`fast_math_engine.h`**: Implementa el núcleo aritmético Q16.16 utilizando enteros con signo de 32 bits e intermediarios de 64 bits para multiplicaciones seguras contra desbordamientos.
+*   **`cordic.h`**: Una implementación CORDIC sin punto flotante para funciones trigonométricas (sen/cos), utilizando normalización de cuadrantes para manejar el rango completo de [-π, π].
+*   **`matrix_q16.h`**: Núcleo de multiplicación de matrices de alto rendimiento que utiliza particionamiento por teselas (tiles de 32x32) para optimizar el comportamiento de la caché y el uso de registros.
+*   **`benchmark_suite.h`**: Orquesta el protocolo experimental, utilizando el registro `ccount` de Xtensa para mediciones de ciclos con precisión de nanosegundos y un LCG (Generador Congruencial Lineal) determinista para datos de prueba reproducibles.
+
+### Firmware de Referencia Estándar (`src/firmware_standard`)
+Este directorio proporciona la implementación base utilizando aritmética de punto flotante de precisión simple estándar IEEE-754 para la comparativa de rendimiento.
+*   **`standard_math.h`**: Envoltorios ligeros sobre la biblioteca estándar de C `math.h` (`sinf`, `cosf`) y operadores nativos de punto flotante.
+*   **`matrix_float.h`**: Una implementación de multiplicación de matrices mediante triple bucle tradicional sin optimizaciones de teselas, sirviendo como línea base arquitectónica.
+*   **`benchmark_suite.h`**: En paralelo con la versión rápida, ejecuta los mismos vectores de prueba pero dirigidos a la ruta de ejecución de punto flotante estándar para cuantificar el factor de aceleración.
+
+---
+
 ## Entorno de Desarrollo
 
 *   **Entorno de Desarrollo Integrado (IDE):** Visual Studio Code
@@ -41,7 +64,12 @@ Un entorno de control integrado desarrollado en Python que orquesta el ciclo de 
 La siguiente demostración ilustra el flujo de trabajo experimental automatizado, incluyendo la orquestación del firmware y la adquisición de telemetría en tiempo real.
 
 <div align="center">
-  <video src="https://github.com/elianalfonsolopezpreciado/resources/raw/main/paper/1.mp4" muted autoplay loop controls width="800"></video>
+  <a href="https://drive.google.com/file/d/1T0rxlihR3cxLFi2EU41E5WtueGxBTuF3/view?usp=sharing" target="_blank">
+    <img src="https://raw.githubusercontent.com/elianalfonsolopezpreciado/resources/main/paper/rendimiento_motor_matematico.png" alt="Ver video de ejecución" width="400">
+    <br>
+    <b>[Haga clic aquí para ver el video completo de la ejecución del laboratorio en Google Drive]</b>
+  </a>
+  <p><i>Nota: El video demuestra el protocolo de flasheo automático y benchmark.</i></p>
 </div>
 
 ### Inicialización y Monitoreo de Firmware
@@ -56,10 +84,10 @@ Análisis comparativo de la inicialización del sistema vía telemetría serial 
 
 ## Caracterización de Rendimiento
 
-El análisis del factor de aceleración del rendimiento demuestra la eficacia de las optimizaciones Q16.16 y CORDIC en diversos núcleos matemáticos.
+El análisis del factor de aceleración del rendimiento demuestra la eficacia de las optimizaciones Q16.16 y CORDIC en comparación con la línea base estándar IEEE-754.
 
 <div align="center">
-  <img src="https://github.com/elianalfonsolopezpreciado/resources/raw/main/paper/rendimiento_motor_matematico.png" alt="Comparativa de Aceleración de Rendimiento" width="800">
+  <img src="https://github.com/elianalfonsolopezpreciado/resources/raw/main/paper/rendimiento_motor_matematico.png" alt="Comparativa de Aceleración de Rendimiento (Español)" width="800">
 </div>
 
 ---
@@ -90,7 +118,7 @@ Prototipo inicial con una GUI en CustomTkinter, flasheo automático mediante `es
 *   **Solución:** Verificación condicional de la existencia de columnas en la tubería estadística.
 
 ### v1.5 — Estandarización de Codificación de Caracteres
-*   **Problema:** `UnicodeEncodeError` durante el renderizado de símbolos científicos.
+*   **Problem:** `UnicodeEncodeError` durante el renderizado de símbolos científicos.
 *   **Causa:** Incompatibilidad entre Windows CP1252 y la notación matemática UTF-8 (ej. σ).
 *   **Solución:** Aplicación universal de la codificación UTF-8 en todos los subsistemas de E/S.
 
