@@ -1,0 +1,4 @@
+fig1_latency_boxplot.png: Distribution of execution cycles across all tests.
+fig2_mae_heatmap.png: Absolute Error (MAE) relative to input magnitude.
+fig3_speedup_ratio.png: Performance multiplier of Fast Engine vs standard math.h.
+fig4_ram_comparison.png: Memory overhead per operation.

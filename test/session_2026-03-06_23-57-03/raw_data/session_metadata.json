@@ -1,0 +1,12 @@
+{
+    "timestamp": "2026-03-06 23:57:57",
+    "status": "OK",
+    "tests_expected": 300,
+    "seed": 42,
+    "os": "nt",
+    "python": "3.10.0",
+    "binaries": {
+        "fast": "C:\\Users\\Elian\\Desktop\\Escritorio\\Github\\PAPER 1 FLASHING\\firmware_fast\\build\\firmware_fast.bin",
+        "standard": "C:\\Users\\Elian\\Desktop\\Escritorio\\Github\\PAPER 1 FLASHING\\firmware_standard\\build\\firmware_standard.bin"
+    }
+}

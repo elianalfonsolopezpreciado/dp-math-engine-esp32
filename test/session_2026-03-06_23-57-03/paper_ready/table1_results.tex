@@ -1,0 +1,22 @@
+\begin{table}[h!]
+\centering
+\caption{Summary of Benchmark Results}
+\label{tab:benchmark_results}
+\begin{tabular}{llrrr}
+\toprule
+function & firmware & \multicolumn{3}{r}{cycles} \\
+ &  & mean & std & max \\
+\midrule
+cos & Fast Engine (Q16.16) & 293.1000 & 1.8506 & 296 \\
+cos & Standard (math.h) & 7232.8571 & 2828.4857 & 15568 \\
+matmul & Fast Engine (Q16.16) & 27316.9667 & 30780.8736 & 84131 \\
+matmul & Standard (math.h) & 14807.6444 & 19259.0186 & 50334 \\
+mul & Fast Engine (Q16.16) & 12.0000 & 0.0000 & 12 \\
+mul & Standard (math.h) & 18.0000 & 0.0000 & 18 \\
+sin & Fast Engine (Q16.16) & 415.4429 & 1025.0387 & 8869 \\
+sin & Standard (math.h) & 7702.3857 & 4142.1218 & 24165 \\
+switch & Fast Engine (Q16.16) & 1943.2500 & 2.5521 & 1947 \\
+switch & Standard (math.h) & 170.7500 & 464.3838 & 1928 \\
+\bottomrule
+\end{tabular}
+\end{table}

@@ -1,0 +1,76 @@
+=== ADVANCED STATISTICAL ANALYSIS ===
+
+Function: sin
+  Normality (Fast): W=0.0993, p=1.2536e-18
+  Normality (Std):  W=0.9347, p=1.2488e-03
+  Wilcoxon Signed-Rank (Std vs Fast): p=3.5558e-13
+  Mean Speedup: 18.540x
+  Median Latency (Fast): 293.00 cycles
+  Median Latency (Std):  6915.50 cycles
+  MAD (Fast): 1.00
+  MAD (Std):  2855.50
+  Jitter (Fast): 2.449653
+  Jitter (Std):  0.533916
+  Determinism Score (Fast): 0.2899
+  Determinism Score (Std):  0.6519
+  Outliers detected (Cycles > 3σ): 1
+
+Function: cos
+  Normality (Fast): W=0.9375, p=1.7019e-03
+  Normality (Std):  W=0.9739, p=1.5140e-01
+  Wilcoxon Signed-Rank (Std vs Fast): p=3.5578e-13
+  Mean Speedup: 24.677x
+  Median Latency (Fast): 293.00 cycles
+  Median Latency (Std):  7847.50 cycles
+  MAD (Fast): 1.00
+  MAD (Std):  1926.50
+  Jitter (Fast): 0.006269
+  Jitter (Std):  0.388257
+  Determinism Score (Fast): 0.9938
+  Determinism Score (Std):  0.7203
+  Outliers detected (Cycles > 3σ): 0
+
+Function: matmul
+  Normality (Fast): W=0.6109, p=4.3590e-14
+  Normality (Std):  W=0.6072, p=3.7084e-14
+  Wilcoxon Signed-Rank (Std vs Fast): p=1.7248e-16
+  Mean Speedup: 0.542x
+  Median Latency (Fast): 16591.00 cycles
+  Median Latency (Std):  7806.00 cycles
+  MAD (Fast): 9738.00
+  MAD (Std):  5748.00
+  Jitter (Fast): 1.120527
+  Jitter (Std):  1.293367
+  Determinism Score (Fast): 0.4716
+  Determinism Score (Std):  0.4360
+  Outliers detected (Cycles > 3σ): 0
+
+Function: mul
+  Normality (Fast): constant data
+  Normality (Std):  constant data
+  Wilcoxon Signed-Rank (Std vs Fast): p=1.5375e-12
+  Mean Speedup: 1.500x
+  Median Latency (Fast): 12.00 cycles
+  Median Latency (Std):  18.00 cycles
+  MAD (Fast): 0.00
+  MAD (Std):  0.00
+  Jitter (Fast): 0.000000
+  Jitter (Std):  0.000000
+  Determinism Score (Fast): 1.0000
+  Determinism Score (Std):  1.0000
+  Outliers detected (Cycles > 3σ): 0
+
+Function: switch
+  Normality (Fast): W=0.7532, p=1.8739e-04
+  Normality (Std):  W=0.3556, p=1.9939e-08
+  Wilcoxon Signed-Rank (Std vs Fast): p=8.1285e-05
+  Mean Speedup: 0.088x
+  Median Latency (Fast): 1942.50 cycles
+  Median Latency (Std):  29.00 cycles
+  MAD (Fast): 1.50
+  MAD (Std):  1.00
+  Jitter (Fast): 0.001280
+  Jitter (Std):  2.650807
+  Determinism Score (Fast): 0.9987
+  Determinism Score (Std):  0.2739
+  Outliers detected (Cycles > 3σ): 0

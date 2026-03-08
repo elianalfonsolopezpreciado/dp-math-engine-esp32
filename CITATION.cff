@@ -1,0 +1,10 @@
+cff-version: 1.2.0
+message: "If you use this code, please cite the corresponding paper."
+title: "Dynamic Precision Math Engine for Linear Algebra and Trigonometry Acceleration on Xtensa LX6 Microcontrollers"
+authors:
+  - family-names: "Lopez Preciado"
+    given-names: "Elian Alfonso"
+version: "v1.0"
+doi: ""
+date-released: "2026-03-01"
+url: "https://arxiv.org/..." 
